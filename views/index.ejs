@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>WebSocket</title>
+  <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css"/>
+  <style>
+    .btn-toggle{display:inline-block;padding:10px;background-color:#000;border-radius:5px;color:#fff;user-select:none;-webkit-user-select:none;cursor:pointer}
+  </style>
+</head>
+<body>
+<div class="container-fluid pt-3 pb-3">
+  <b id="btn-toggle" class="btn-toggle"><span>Off</span></b>
+</div>
+<script>
+  var host = location.hostname;
+  var ws = new WebSocket('ws://' + host + ':8000');
+  var _isOn = false;
+  var $btnToggle = document.querySelector('#btn-toggle');
+  var $btnToggleSpan = $btnToggle.firstElementChild;
+  var sendMessage = function(value) {
+    ws.send(value);
+  }
+  $btnToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    _isOn = !_isOn;
+    $btnToggleSpan.innerHTML = (_isOn) ? 'On' : 'Off';
+    sendMessage(Number(_isOn));
+  });
+  ws.onopen = function(e) {
+    sendMessage(Number(_isOn));
+  }
+  ws.onmessage = function(e) {
+  }
+</script>
+</body>
+</html>

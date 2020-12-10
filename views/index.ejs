@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>WebSocket</title>
-  <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="/css/reset.css"/>
   <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
 <div class="container box">
-  <video width="auto" height="100%" autoplay loop muted playsinline>
+  <video id="video" width="auto" height="100%" autoplay loop muted playsinline>
     <source src="/assets/video/chkey.mp4" type="video/mp4">
     <source src="/assets/video/chkey.ogv" type="video/ogv">
     <source src="/assets/video/chkey.webm" type="video/webm">
@@ -29,7 +28,8 @@
   var host = location.hostname;
   var ws = new WebSocket('ws://' + host + ':8000');
   var _isOn = false;
-  var $btnToggle = document.querySelector('#btn-toggle');
+  var $btnToggle = document.getElementById('btn-toggle');
+  var $video = document.getElementById('video');
   var $btnToggleSpan = $btnToggle.firstElementChild;
   var sendMessage = function(value) {
     ws.send(value);
@@ -37,13 +37,21 @@
   $btnToggle.addEventListener('click', function(e) {
     e.preventDefault();
     _isOn = !_isOn;
-    $btnToggleSpan.innerHTML = (_isOn) ? 'On' : 'Off';
+    $btnToggleSpan.innerHTML = (_isOn) ? 'Reject Access' : 'Approve Access';
     sendMessage(Number(_isOn));
   });
   ws.onopen = function(e) {
     sendMessage(Number(_isOn));
   }
   ws.onmessage = function(e) {
+  }
+
+  $video.controls= false;
+  var promise = $video.play();
+  if(promise !== undefined) {
+    promise.then(() => {
+    }).catch(e => {
+    });
   }
 </script>
 </body>

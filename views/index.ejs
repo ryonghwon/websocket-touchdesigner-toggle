@@ -6,13 +6,24 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>WebSocket</title>
   <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css"/>
-  <style>
-    .btn-toggle{display:inline-block;padding:10px;background-color:#000;border-radius:5px;color:#fff;user-select:none;-webkit-user-select:none;cursor:pointer}
-  </style>
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-<div class="container-fluid pt-3 pb-3">
-  <b id="btn-toggle" class="btn-toggle"><span>Off</span></b>
+<div class="container box">
+  <video width="auto" height="100%" autoplay loop muted playsinline>
+    <source src="/assets/video/chkey.mp4" type="video/mp4">
+    <source src="/assets/video/chkey.ogv" type="video/ogv">
+    <source src="/assets/video/chkey.webm" type="video/webm">
+    <strong>Your browser does not support the video tag.</strong>
+  </video>
+  <div class="content">
+    <h1>ALLOW<br>STRANGER'S<br>ACCESS TO</h1>
+    <h2>#NONHUMAN<br>#GUD</h2>
+    <div class="container-fluid pt-3 pb-3">
+      <b id="btn-toggle" class="btn-toggle"><span>Approve Access</span></b>
+    </div>
+  </div>
 </div>
 <script>
   var host = location.hostname;

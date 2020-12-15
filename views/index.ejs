@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>WebSocket</title>
+  <title>nonhuman-access-button</title>
   <link rel="stylesheet" href="/css/reset.css"/>
   <link rel="stylesheet" href="/css/style.css"/>
 </head>
@@ -17,7 +17,7 @@
     <strong>Your browser does not support the video tag.</strong>
   </video>
   <div class="content">
-    <h1>ALLOW<br>STRANGER'S<br>ACCESS TO</h1>
+    <h1>ALLOW<br><span id="access" class="off">STRANGER'S<br>ACCESS</span> TO</h1>
     <h2>#NONHUMAN<br>#GUD</h2>
     <div class="container-fluid pt-3 pb-3">
       <b id="btn-toggle" class="btn-toggle"><span>Approve Access</span></b>
@@ -28,8 +28,10 @@
   var host = location.hostname;
   var ws = new WebSocket('ws://' + host + ':8000');
   var _isOn = false;
+  var _isBtn = false;
   var $btnToggle = document.getElementById('btn-toggle');
   var $video = document.getElementById('video');
+  var $access = document.getElementById('access');
   var $btnToggleSpan = $btnToggle.firstElementChild;
   var sendMessage = function(value) {
     ws.send(value);
@@ -38,14 +40,14 @@
     e.preventDefault();
     _isOn = !_isOn;
     $btnToggleSpan.innerHTML = (_isOn) ? 'Reject Access' : 'Approve Access';
-    sendMessage(Number(_isOn));
+    let data = `${Number(_isOn)} ${Number(_isBtn)}`;
+    sendMessage(data);
   });
-  ws.onopen = function(e) {
-    sendMessage(Number(_isOn));
-  }
   ws.onmessage = function(e) {
+    let data = e.data.split(" ");
+    if(data.length > 1) _isBtn = Boolean(Number(data[1]));
+    (_isBtn) ? $access.classList.add("on") : $access.classList.remove("on");
   }
-
   $video.controls= false;
   var promise = $video.play();
   if(promise !== undefined) {

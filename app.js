@@ -10,6 +10,8 @@ var indexRouter = require('./routes/index');
 var app = express();
 var socket = new ws({ port : 8000 });
 
+var tdSocket = new ws({ port : 9000 });
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -37,19 +39,16 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 var connects = [];
 var broadcast = (message) => {
   connects.forEach(function(socket) {
     socket.send(message);
   });
 }
-
 socket.on('connection', (ws) => {
   connects.push(ws);
   console.log('New Client Connected : ', connects.length);
   ws.on('message', (message) => {
-    console.log(message);
     broadcast(message);
   });
   ws.on('close', () => {

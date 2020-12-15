@@ -123,3 +123,25 @@ h2{
 .box {overflow: hidden; margin: 0px auto; position: relative; }
 video {height: 100%; position: absolute;top:0;filter: brightness(0.9);}
 /* video::after{opacity: 0;} */
+
+.off{
+  color: rgb(187, 187, 187);
+}
+
+.on{
+  animation: neon 1.5s ease infinite;
+  -moz-animation: neon 1.5s ease infinite;
+  -webkit-animation: neon 1.5s ease infinite;
+}
+
+@keyframes neon {
+  0%,
+  100% {
+    text-shadow: 0 0 0.1vw #44fa168e, 0 0 0.5vw #44fa168e, 0 0 1vw #44fa168e, 0 0 1vw #44fa168e, 0 0 .05vw #28fe418e, .1vw .1vw .03vw #1480388e;
+    color: rgb(0, 255, 170);
+  }
+  50% {
+    text-shadow: 0 0 0.1vw #2fb60d8e, 0 0 0.5vw #2fb60d8e, 0 0 1vw #2fb60d8e, 0 0 1vw #2fb60d8e, 0 0 .05vw #2fb60d8e, .1vw .1vw .03vw #13400a8e;
+    color: rgb(16, 185, 129);
+  }
+}
